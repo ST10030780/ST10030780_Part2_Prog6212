@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ST10030780_Part2_Prog6212.Models.Claim>
+
+<h2>Verify Claims</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Lecturer</th>
+            <th>Hours Worked</th>
+            <th>Hourly Rate</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in Model)
+        {
+            <tr>
+                <td>@claim.LecturerName</td>
+                <td>@claim.HoursWorked</td>
+                <td>@claim.HourlyRate</td>
+                <td>@claim.Status</td>
+                <td>
+                    <form asp-action="UpdateClaimStatus" asp-controller="Claims" method="post" style="display:inline;">
+                        <input type="hidden" name="claimId" value="@claim.Id" />
+                        <input type="hidden" name="status" value="Approved" />
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                    <form asp-action="UpdateClaimStatus" asp-controller="Claims" method="post" style="display:inline;">
+                        <input type="hidden" name="claimId" value="@claim.Id" />
+                        <input type="hidden" name="status" value="Rejected" />
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
